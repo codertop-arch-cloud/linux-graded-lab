@@ -19,15 +19,20 @@ Below is the directory mapping of the repository:
 linux-graded-lab/
 ├── README.md                           <- Root explanation (this file)
 ├── Question1/                          <- Linux Environment Verification
-│   └── Environment_Report.txt          <- System details, shell, directory, ping outputs
+│   ├── Environment_Report.txt          <- System details, shell, directory, ping outputs
+│   └── screenshots/                    <- Sequentially named screenshots (1.png - 6.png)
 ├── Question2/                          <- Secure Project Workspace Setup
-│   └── Project_Workspace_Report.txt     <- Workspace permissions, ownership, umask report
+│   ├── Project_Workspace_Report.txt    <- Workspace permissions, ownership, umask report
+│   └── screenshots/                    <- Sequentially named screenshots (1.png - 8.png)
 ├── Question3/                          <- File System and Link Analysis
-│   └── Link_Analysis_Report.txt        <- Hard/soft links comparison and inode experiment
+│   ├── Link_Analysis_Report.txt        <- Hard/soft links comparison and inode experiment
+│   └── screenshots/                    <- Sequentially named screenshots (1.png - 9.png)
 ├── Question4/                          <- File Access and I/O Investigation
-│   └── IO_Investigation_Report.txt     <- Open files, descriptors, redirects, ulimit report
+│   ├── IO_Investigation_Report.txt     <- Open files, descriptors, redirects, ulimit report
+│   └── screenshots/                    <- Sequentially named screenshots (1.png - 8.png)
 └── Question5/                          <- Storage Health Assessment and Documentation
-    └── Storage_Assessment_Report.txt   <- Disk usage, inodes, recommendations (via vi editor)
+    ├── Storage_Assessment_Report.txt   <- Disk usage, inodes, recommendations (via vi editor)
+    └── screenshots/                    <- Sequentially named screenshots (1.png - 10.png)
 ```
 
 ---

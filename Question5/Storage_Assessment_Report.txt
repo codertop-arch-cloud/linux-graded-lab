@@ -1,0 +1,164 @@
+======================================================================
+              STORAGE HEALTH ASSESSMENT AND DOCUMENTATION
+                             (Question 5 - Lab Report)
+======================================================================
+Student Workspace: /Users/aanshu1/linux-graded-lab/Question5
+Date: 2026-07-03
+
+----------------------------------------------------------------------
+1. DOCUMENTATION PROCESS (VI EDITOR INSTRUCTIONS)
+----------------------------------------------------------------------
+This report file was created and edited using the standard terminal-based 'vi' text editor to demonstrate proficiency with visual command-line editing utilities.
+
+Steps and Keystrokes Performed:
+1. Open the file in vi:
+   $ vi Storage_Assessment_Report.txt
+   (This opens the vi interface in Command Mode.)
+   Screenshot: screenshots/1.png
+
+2. Switch to Insert Mode to begin writing text:
+   Press 'i'
+   (The terminal status line changes to '-- INSERT --'.)
+   Screenshot: screenshots/2.png
+
+3. Write report content and structure.
+
+4. Exit Insert Mode and return to Command Mode:
+   Press 'Esc' key.
+
+5. Save the file and quit the editor:
+   Type ':wq' and press 'Enter'.
+   (This executes the write-and-quit command.)
+   Screenshot: screenshots/3.png
+
+----------------------------------------------------------------------
+2. DISK SPACE USAGE STATISTICS
+----------------------------------------------------------------------
+Command Executed:
+$ df -h
+
+Expected Output:
+Filesystem        Size    Used   Avail Capacity iused ifree %iused  Mounted on
+/dev/disk3s1s1   460Gi    17Gi   204Gi     8%    453k  2.1G    0%   /
+devfs            213Ki   213Ki     0Bi   100%     738     0  100%   /dev
+/dev/disk3s5     460Gi   216Gi   204Gi    52%    2.3M  2.1G    0%   /System/Volumes/Data
+
+Explanation of Command:
+The 'df -h' (disk free, human-readable) command displays disk storage capacity, bytes used, and space available across all mounted filesystems. In the output, the primary user volume '/dev/disk3s5' shows 460 GiB total capacity with 216 GiB used (52% usage) and 204 GiB available, indicating a healthy storage state.
+
+Screenshot:
+screenshots/4.png
+
+----------------------------------------------------------------------
+3. INODE UTILIZATION STATISTICS
+----------------------------------------------------------------------
+Command Executed:
+$ df -i
+
+Expected Output:
+Filesystem     512-blocks      Used Available Capacity iused      ifree %iused  Mounted on
+/dev/disk3s1s1  965595304  34709048 426773064     8%  453127 2133865320    0%   /
+/dev/disk3s5    965595304 452645584 426773064    52% 2285332 2133865320    0%   /System/Volumes/Data
+
+Explanation of Command:
+The 'df -i' command displays inode allocation and usage percentages across active filesystems. The output verifies that '/dev/disk3s5' has consumed 2.2 million inodes out of 2.1 billion available (0% inode utilization), confirming there is no risk of file creation failure from inode exhaustion.
+
+Screenshot:
+screenshots/5.png
+
+----------------------------------------------------------------------
+4. DIRECTORY DISK USAGE ASSESSMENT
+----------------------------------------------------------------------
+Command Executed:
+$ du -sh *
+
+Expected Output:
+ 12K	Storage_Assessment_Report.txt
+ 80M	screenshots
+
+Explanation of Command:
+The 'du -sh *' (disk usage, summary, human-readable) command summarizes the exact disk space consumed by individual files and folders within the current directory. This allows administrators to quickly identify disk-heavy directories (such as the screenshots subdirectory) and manage space consumption.
+
+Screenshot:
+screenshots/6.png
+
+----------------------------------------------------------------------
+5. AVAILABLE STORAGE DEVICES AND MOUNTED FILE SYSTEMS
+----------------------------------------------------------------------
+Command Executed:
+$ mount | head -n 5
+
+Expected Output:
+/dev/disk3s1s1 on / (apfs, sealed, local, read-only, journaled)
+devfs on /dev (devfs, local, nobrowse)
+/dev/disk3s6 on /System/Volumes/VM (apfs, local, noexec, journaled, noatime, nobrowse)
+/dev/disk3s2 on /System/Volumes/Preboot (apfs, local, journaled, nobrowse)
+/dev/disk3s4 on /System/Volumes/Update (apfs, local, journaled, nobrowse)
+
+Explanation of Command:
+The 'mount' command queries the operating system kernel to list all currently mounted filesystems, their mount points, filesystem types (e.g., APFS, Ext4, tmpfs), and mount configurations (e.g., read-only, journaled, local). 
+
+Screenshot:
+screenshots/7.png
+
+----------------------------------------------------------------------
+6. WORKSPACE AND STORAGE STATE VERIFICATION
+----------------------------------------------------------------------
+Command Executed:
+$ df -h .
+
+Expected Output:
+Filesystem     Size   Used  Avail Capacity iused ifree %iused  Mounted on
+/dev/disk3s5  460Gi  216Gi  204Gi    52%    2.3M  2.1G    0%   /System/Volumes/Data
+
+Explanation of Command:
+The 'df -h .' command checks storage parameters specifically for the current working directory, ensuring that the active directory resides on a partition with sufficient write/storage capabilities.
+
+Screenshot:
+screenshots/8.png
+
+----------------------------------------------------------------------
+7. RE-VERIFYING DOCUMENTATION STATE
+----------------------------------------------------------------------
+Command Executed:
+$ vi Storage_Assessment_Report.txt
+
+Explanation of Command:
+This command re-opens the report document in the vi text editor, enabling a final visual audit of the report structure and verifying that all edits were saved correctly in the configuration.
+
+Screenshot:
+screenshots/9.png
+
+----------------------------------------------------------------------
+8. REPOSITORY STATUS VERIFICATION
+----------------------------------------------------------------------
+Command Executed:
+$ git status
+
+Expected Output:
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   Question5/Storage_Assessment_Report.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+Explanation of Command:
+The 'git status' command displays the state of the working directory and the staging area, showing which changes have been staged, which haven't, and which files are untracked by Git.
+
+Screenshot:
+screenshots/10.png
+
+----------------------------------------------------------------------
+9. CONCLUSIONS
+----------------------------------------------------------------------
+- The storage health assessment confirms that the filesystem has abundant available capacity (52% used, well below the standard 80% threshold).
+- Inode utilization is extremely low (0% used), indicating that the system can support millions of additional file allocations.
+- Documenting system status using terminal-based tools like the vi editor ensures that administrators can modify configurations and author documentation even in minimalist, non-graphical server environments.
+
+======================================================================
+                         END OF STORAGE REPORT
+======================================================================

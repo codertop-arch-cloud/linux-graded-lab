@@ -1,6 +1,6 @@
 ======================================================================
-                     FILE SYSTEM AND LINK ANALYSIS REPORT
-                             (Question 3 - Lab Report)
+                      FILE SYSTEM AND LINK ANALYSIS REPORT
+                              (Question 3 - Lab Report)
 ======================================================================
 Student Workspace: /Users/aanshu1/linux-graded-lab/Question3
 Date: 2026-07-03
@@ -9,98 +9,140 @@ Date: 2026-07-03
 1. LINK CREATION AND INITIAL STATE
 ----------------------------------------------------------------------
 Commands Executed:
-$ echo "Hello Linux Links" > original.txt
+$ echo "Linux Lab" > original.txt
 $ ln original.txt hardlink.txt
 $ ln -s original.txt symlink.txt
 
 Explanation of Commands:
-The first command creates 'original.txt' with text content. The 'ln' command creates a hard link named 'hardlink.txt' pointing to the same data block, and 'ln -s' creates a symbolic (soft) link named 'symlink.txt' pointing to the filename 'original.txt'.
+The first command creates 'original.txt' with the text content "Linux Lab". The 'ln' command creates a hard link named 'hardlink.txt' pointing to the same data block, and 'ln -s' creates a symbolic (soft) link named 'symlink.txt' pointing to the filename 'original.txt'.
 
-Screenshot Placeholder:
-[SCREENSHOT: Terminal output showing creation of original file, hard link, and symbolic link]
+Screenshot:
+screenshots/1.png
 
 ----------------------------------------------------------------------
-2. METADATA AND INODE VERIFICATION
+2. METADATA AND INODE VERIFICATION (BEFORE DELETION)
 ----------------------------------------------------------------------
 Command Executed:
 $ ls -li
 
 Expected Output:
 total 16
-67125766 -rw-r--r--  2 aanshu1  staff  18 Jul  3 17:26 hardlink.txt
-67125766 -rw-r--r--  2 aanshu1  staff  18 Jul  3 17:26 original.txt
-67125769 lrwxr-xr-x  1 aanshu1  staff  12 Jul  3 17:26 symlink.txt -> original.txt
+67125766 -rw-r--r--  2 aanshu1  staff  10 Jul  3 18:33 hardlink.txt
+67125766 -rw-r--r--  2 aanshu1  staff  10 Jul  3 18:33 original.txt
+67125769 lrwxr-xr-x  1 aanshu1  staff  12 Jul  3 18:33 symlink.txt -> original.txt
 
 Explanation of Command:
 The 'ls -li' command displays directory contents including the inode index number (first column) and the directory link counts (third column). In the output, we observe that 'original.txt' and 'hardlink.txt' share inode '67125766' and have a link count of 2, while 'symlink.txt' has a unique inode '67125769' and link count of 1.
 
-Screenshot Placeholder:
-[SCREENSHOT: Terminal output of 'ls -li' showing matching inodes for hard link and unique inode for soft link]
+Screenshot:
+screenshots/2.png
 
 ----------------------------------------------------------------------
-3. DETAILED FILE METADATA USING STAT UTILITY
+3. DETAILED METADATA OF ORIGINAL FILE
 ----------------------------------------------------------------------
-Commands Executed:
+Command Executed:
 $ stat original.txt
+
+Expected Output:
+16777232 67125766 -rw-r--r-- 2 aanshu1 staff 0 10 "Jul  3 18:33:36 2026" "Jul  3 18:33:36 2026" "Jul  3 18:33:36 2026" "Jul  3 18:33:36 2026" 4096 8 0 original.txt
+
+Explanation of Command:
+The 'stat' command provides detailed status/metadata information for the file 'original.txt', confirming its size is 10 bytes and it has 2 hard links sharing the inode index '67125766'.
+
+Screenshot:
+screenshots/3.png
+
+----------------------------------------------------------------------
+4. DETAILED METADATA OF HARD LINK
+----------------------------------------------------------------------
+Command Executed:
 $ stat hardlink.txt
+
+Expected Output:
+16777232 67125766 -rw-r--r-- 2 aanshu1 staff 0 10 "Jul  3 18:33:36 2026" "Jul  3 18:33:36 2026" "Jul  3 18:33:36 2026" "Jul  3 18:33:36 2026" 4096 8 0 hardlink.txt
+
+Explanation of Command:
+The 'stat' command is run on 'hardlink.txt'. It shows the exact same inode '67125766', matching permissions, size (10 bytes), and modification timestamps as the original file, showing that it points to the exact same physical block.
+
+Screenshot:
+screenshots/4.png
+
+----------------------------------------------------------------------
+5. DETAILED METADATA OF SYMBOLIC LINK
+----------------------------------------------------------------------
+Command Executed:
 $ stat symlink.txt
 
 Expected Output:
-$ stat original.txt
-16777232 67125766 -rw-r--r-- 2 aanshu1 staff 0 18 "Jul  3 17:26:30 2026" "Jul  3 17:26:30 2026" original.txt
+16777232 67125769 lrwxr-xr-x 1 aanshu1 staff 0 12 "Jul  3 18:33:36 2026" "Jul  3 18:33:36 2026" "Jul  3 18:33:36 2026" "Jul  3 18:33:36 2026" 4096 0 0 symlink.txt -> original.txt
 
-$ stat hardlink.txt
-16777232 67125766 -rw-r--r-- 2 aanshu1 staff 0 18 "Jul  3 17:26:30 2026" "Jul  3 17:26:30 2026" hardlink.txt
+Explanation of Command:
+The 'stat' command run on 'symlink.txt' reveals its status as a symbolic link ('l' prefix in permissions), with a unique inode '67125769', a link count of 1, and a size of 12 bytes (corresponding to the character length of the path string "original.txt").
 
-$ stat symlink.txt
-16777232 67125769 lrwxr-xr-x 1 aanshu1 staff 0 12 "Jul  3 17:26:30 2026" "Jul  3 17:26:30 2026" symlink.txt -> original.txt
-
-Explanation of Commands:
-The 'stat' command provides detailed status/metadata information for a file, including block sizes, device info, inode number, link count, and timestamps. Running it confirms that the hard link is a duplicate directory entry for the exact same inode, while the symbolic link is a separate file whose content is the text string path 'original.txt'.
-
-Screenshot Placeholder:
-[SCREENSHOT: Command output of the 'stat' utility executed on all three files]
+Screenshot:
+screenshots/5.png
 
 ----------------------------------------------------------------------
-4. SIMULATION OF ORIGINAL FILE DELETION
+6. SIMULATION OF ORIGINAL FILE DELETION
 ----------------------------------------------------------------------
-Commands Executed:
+Command Executed:
 $ rm original.txt
+
+Explanation of Command:
+The 'rm' command deletes the 'original.txt' directory entry, decreasing the link count of inode '67125766' from 2 to 1. The data blocks are not removed because the link count is still greater than 0.
+
+Screenshot:
+screenshots/6.png
+
+----------------------------------------------------------------------
+7. READING HARD LINK AFTER DELETION
+----------------------------------------------------------------------
+Command Executed:
 $ cat hardlink.txt
+
+Expected Output:
+Linux Lab
+
+Explanation of Command:
+Reading 'hardlink.txt' succeeds because it points directly to the underlying inode and data block, which remain on disk despite the deletion of the original directory entry.
+
+Screenshot:
+screenshots/7.png
+
+----------------------------------------------------------------------
+8. READING SYMBOLIC LINK AFTER DELETION
+----------------------------------------------------------------------
+Command Executed:
 $ cat symlink.txt
 
 Expected Output:
-$ rm original.txt
-$ cat hardlink.txt
-Hello Linux Links
-$ cat symlink.txt
 cat: symlink.txt: No such file or directory
 
-Explanation of Commands:
-The 'rm' command deletes the 'original.txt' directory entry, reducing the link count of inode '67125766' from 2 to 1. Reading 'hardlink.txt' succeeds because the underlying data block and its inode remain intact, whereas reading 'symlink.txt' fails because its target file path no longer exists, resulting in a dangling link.
+Explanation of Command:
+Reading 'symlink.txt' fails with a "No such file or directory" error because it is a symbolic link that points to the name 'original.txt', which no longer exists, resulting in a dangling link.
 
-Screenshot Placeholder:
-[SCREENSHOT: Deletion of original.txt and the subsequent cat commands demonstrating the link behavior]
+Screenshot:
+screenshots/8.png
 
 ----------------------------------------------------------------------
-5. WORKSPACE CLEANUP & RESTORATION OF LINKS
+9. FINAL WORKSPACE STATE VERIFICATION
 ----------------------------------------------------------------------
-Commands Executed:
+Command Executed:
 $ ls -li
 
 Expected Output:
 total 8
-67125766 -rw-r--r--  1 aanshu1  staff  18 Jul  3 17:26 hardlink.txt
-67125769 lrwxr-xr-x  1 aanshu1  staff  12 Jul  3 17:26 symlink.txt -> original.txt
+67125766 -rw-r--r--  1 aanshu1  staff  10 Jul  3 18:33 hardlink.txt
+67125769 lrwxr-xr-x  1 aanshu1  staff  12 Jul  3 18:33 symlink.txt -> original.txt
 
 Explanation of Command:
-The 'ls -li' command executed after deletion displays the updated system state. We observe that 'hardlink.txt' is still present with a link count of 1, and 'symlink.txt' remains in the folder but points to a missing file.
+Executing 'ls -li' after deletion displays the updated system state. We observe that 'hardlink.txt' remains present with a link count of 1, while 'symlink.txt' remains in the folder but points to a missing file.
 
-Screenshot Placeholder:
-[SCREENSHOT: Terminal list showing files and link counts post-deletion]
+Screenshot:
+screenshots/9.png
 
 ----------------------------------------------------------------------
-6. TECHNICAL COMPARISON: HARD LINK VS. SYMBOLIC LINK
+10. TECHNICAL COMPARISON: HARD LINK VS. SYMBOLIC LINK
 ----------------------------------------------------------------------
 Below is a comparison summarizing findings from this experiment:
 
@@ -114,12 +156,12 @@ Below is a comparison summarizing findings from this experiment:
 | Behavior on Source Delete | Data remains accessible via hard link    | Becomes broken / dangling symlink       |
 
 ----------------------------------------------------------------------
-7. CONCLUSIONS
+11. CONCLUSIONS
 ----------------------------------------------------------------------
-- Hard links are directory pointers directly referencing a file's raw inode data. As long as at least one hard link exists (link count > 0), the file data remains fully intact on disk.
-- Symbolic links are shortcut files containing the pathname of the target. If the target file is renamed or deleted, the symlink breaks because its text reference points to a non-existent path.
-- The experiment clearly demonstrates how accidental file deletion can be mitigated by hard links, and why soft links are highly dependent on the absolute/relative path of the target file.
+- Hard links are directory entries directly pointing to a file's raw inode. The underlying file data remains accessible on disk as long as at least one hard link exists (link count > 0).
+- Symbolic links are distinct shortcut files containing the pathname of the target. If the target file is deleted, the symlink breaks because its text reference points to a non-existent path.
+- This experiment demonstrates how hard links can protect against accidental deletion of specific directory entry links, whereas symbolic links are flexible (can span across partitions/devices) but completely dependent on the persistence of their target paths.
 
 ======================================================================
-                          END OF LINK ANALYSIS REPORT
+                           END OF LINK ANALYSIS REPORT
 ======================================================================
