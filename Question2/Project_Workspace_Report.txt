@@ -1,0 +1,106 @@
+======================================================================
+                     SECURE PROJECT WORKSPACE SETUP REPORT
+                             (Question 2 - Lab Report)
+======================================================================
+Student Workspace: /Users/aanshu1/.gemini/antigravity/scratch/linux-graded-lab/Question2
+Date: 2026-07-03
+
+----------------------------------------------------------------------
+1. WORKSPACE DIRECTORY STRUCTURE
+----------------------------------------------------------------------
+The following directory structure was created for storing secure project files and documentation:
+
+Question2/
+├── Project_Workspace_Report.txt
+└── secure_workspace/
+    └── project_plan.txt (Project document)
+
+Command Executed to Create Structure:
+$ mkdir -p secure_workspace && touch secure_workspace/project_plan.txt
+
+Explanation of Command:
+The 'mkdir -p' command creates the 'secure_workspace' folder if it doesn't already exist, and 'touch' initializes an empty file 'project_plan.txt' within that directory. This sets up the directory hierarchy for applying secure access control rules.
+
+Screenshot Placeholder:
+[SCREENSHOT: Folder structure view in Terminal or using the 'tree' command]
+
+----------------------------------------------------------------------
+2. CURRENT UMASK VALUE
+----------------------------------------------------------------------
+Command Executed:
+$ umask
+
+Expected Output:
+022
+
+Explanation of Command:
+The 'umask' command displays the default system user mask, which determines the initial file permissions for newly created files and directories. A umask of 022 automatically strips write privileges for groups and others, resulting in 755 permissions for folders and 644 for files.
+
+Screenshot Placeholder:
+[SCREENSHOT: Execution of 'umask' displaying 022 in the shell]
+
+----------------------------------------------------------------------
+3. INITIAL FILE PERMISSIONS AND OWNERSHIP (BEFORE MODIFICATION)
+----------------------------------------------------------------------
+Commands Executed:
+$ ls -ld secure_workspace
+$ ls -l secure_workspace/project_plan.txt
+
+Expected Output:
+drwxr-xr-x  3 aanshu1  staff  96 Jul  3 17:25 secure_workspace
+-rw-r--r--  1 aanshu1  staff   0 Jul  3 17:25 secure_workspace/project_plan.txt
+
+Explanation of Commands:
+The 'ls -ld' command prints details of the 'secure_workspace' folder itself, while 'ls -l' prints details of 'project_plan.txt'. Both listings display the default permissions before we apply stricter access security policies.
+
+Screenshot Placeholder:
+[SCREENSHOT: Initial permissions showing drwxr-xr-x for workspace and -rw-r--r-- for project_plan.txt]
+
+----------------------------------------------------------------------
+4. PERMISSION MODIFICATION AND CONFIGURATION
+----------------------------------------------------------------------
+Commands Executed:
+$ chmod 750 secure_workspace
+$ chmod 640 secure_workspace/project_plan.txt
+
+Explanation of Commands:
+The 'chmod' (change mode) command alters read, write, and execute permissions on files and directories. Running 'chmod 750' restricts the workspace folder so that only the owner has full access, the group has read/execute, and others have zero permissions; 'chmod 640' applies a matching policy for the project file.
+
+Screenshot Placeholder:
+[SCREENSHOT: Running chmod command to secure the workspace folder and the file]
+
+----------------------------------------------------------------------
+5. VERIFYING MODIFIED PERMISSIONS AND OWNERSHIP (AFTER MODIFICATION)
+----------------------------------------------------------------------
+Commands Executed:
+$ ls -ld secure_workspace
+$ ls -l secure_workspace/project_plan.txt
+
+Expected Output:
+drwxr-x---  3 aanshu1  staff  96 Jul  3 17:25 secure_workspace
+-rw-r-----  1 aanshu1  staff   0 Jul  3 17:25 secure_workspace/project_plan.txt
+
+Explanation of Commands:
+These commands list the secure directory and file attributes again to verify that the permission changes were applied correctly. The outputs confirm that permissions were updated successfully, changing access levels from 755/644 to 750/640.
+
+Screenshot Placeholder:
+[SCREENSHOT: Final verification screen showing drwxr-x--- permissions and ownership by aanshu1:staff]
+
+----------------------------------------------------------------------
+6. TECHNICAL OBSERVATIONS & DETAILED SECURITY ANALYSIS
+----------------------------------------------------------------------
+Permission Analysis Summary:
+- Workspace Directory (Before: drwxr-xr-x / 755) -> (After: drwxr-x--- / 750)
+- Project Document (Before: -rw-r--r-- / 644) -> (After: -rw-r----- / 640)
+- Owner: aanshu1 (Full Read/Write access)
+- Group: staff (Read-only/traverse access for directory; Read-only access for files)
+- Others/World: No Access (Completely blocked)
+
+Explanation of Security Protection:
+- The owner 'aanshu1' retains full administrative control, allowing modifications, deletions, and standard file operations.
+- The group 'staff' has read-only privileges, which is ideal for a collaborative team structure where members need to view documentation and run binaries/enter folders but cannot make unauthorized modifications.
+- By stripping permissions from 'others' (the 0 in 750 and 640), we ensure that any unauthorized system users who are not part of the 'staff' group are completely blocked from viewing directory contents or accessing files. This implements the Principle of Least Privilege.
+
+======================================================================
+                        END OF WORKSPACE REPORT
+======================================================================

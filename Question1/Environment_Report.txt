@@ -1,0 +1,140 @@
+======================================================================
+                     LINUX ENVIRONMENT VERIFICATION REPORT
+                             (Question 1 - Lab Report)
+======================================================================
+Student Workspace: /Users/aanshu1/.gemini/antigravity/scratch/linux-graded-lab
+Date: 2026-07-03
+
+----------------------------------------------------------------------
+1. USERNAME VERIFICATION
+----------------------------------------------------------------------
+Command Executed:
+$ whoami
+
+Expected Output:
+aanshu1
+
+Explanation of Command:
+The 'whoami' command prints the effective username of the current user logged into the system. During execution, it successfully returned the active user account name 'aanshu1', verifying that the session is running under this user environment.
+
+Screenshot Placeholder:
+[SCREENSHOT: Terminal output showing the execution and result of the 'whoami' command]
+
+Brief Observations:
+- The user account is active, initialized, and configured with standard user privileges.
+- No root or sudo elevation is currently active for this login shell session.
+- The environment variable representing the user is set correctly.
+
+----------------------------------------------------------------------
+2. GROUPS ASSOCIATED WITH ACCOUNT
+----------------------------------------------------------------------
+Command Executed:
+$ groups
+
+Expected Output:
+staff everyone localaccounts _appserverusr admin _appserveradm _lpadmin com.apple.sharepoint.group.2 com.apple.sharepoint.group.3 com.apple.sharepoint.group.6 com.apple.sharepoint.group.1 com.apple.sharepoint.group.4 _appstore _lpoperator _developer _analyticsusers com.apple.access_ftp com.apple.access_screensharing com.apple.access_ssh com.apple.access_remote_ae com.apple.sharepoint.group.5
+
+Explanation of Command:
+The 'groups' command lists all the group memberships of the current user, showing access levels to various files and resources. The output indicates membership in primary system groups like 'staff' and 'everyone', as well as administrative groups like 'admin'.
+
+Screenshot Placeholder:
+[SCREENSHOT: Terminal output showing groups associated with the 'aanshu1' account]
+
+Brief Observations:
+- The user 'aanshu1' has administrative capabilities due to membership in the 'admin' group.
+- Multiple application-specific groups (e.g., '_developer', '_analyticsusers') are attached to the account.
+- The user has appropriate local permissions and group ownership capabilities for standard project workflows.
+
+----------------------------------------------------------------------
+3. CURRENT SHELL BEING USED
+----------------------------------------------------------------------
+Command Executed:
+$ echo $SHELL
+
+Expected Output:
+/bin/zsh
+
+Explanation of Command:
+The 'echo $SHELL' command displays the path to the currently active shell command interpreter stored in the environment variable $SHELL. Here, it indicates that Zsh (Z Shell) is the default command-line interface running for this terminal instance.
+
+Screenshot Placeholder:
+[SCREENSHOT: Terminal command echo $SHELL showing the default shell /bin/zsh]
+
+Brief Observations:
+- The current command environment is Zsh, which is the standard default shell on modern macOS systems.
+- Command-line syntax, auto-completion, and shell behavior will conform to Zsh shell specifications.
+- Custom login configurations can be managed using the '.zshrc' file in the user's home folder.
+
+----------------------------------------------------------------------
+4. CURRENT WORKING DIRECTORY
+----------------------------------------------------------------------
+Command Executed:
+$ pwd
+
+Expected Output:
+/Users/aanshu1/.gemini/antigravity/scratch/linux-graded-lab/Question1
+
+Explanation of Command:
+The 'pwd' (print working directory) command prints the absolute path of the directory you are currently working in. The command outputs the exact location where our verification files and lab reports are currently being configured.
+
+Screenshot Placeholder:
+[SCREENSHOT: Terminal output of the 'pwd' command displaying the path to the Question1 directory]
+
+Brief Observations:
+- The command accurately verified that the working directory is pointing to the Question1 subdirectory.
+- Any new files created without specifying an absolute path will be written to this location.
+- This directory is situated within the overall workspace created for the graded lab.
+
+----------------------------------------------------------------------
+5. LIST OF FILES AND DIRECTORIES IN WORKSPACE
+----------------------------------------------------------------------
+Command Executed:
+$ ls -la
+
+Expected Output:
+total 8
+drwxr-xr-x  3 aanshu1  staff    96 Jul  3 17:23 .
+drwxr-xr-x  7 aanshu1  staff   224 Jul  3 17:23 ..
+-rw-r--r--  1 aanshu1  staff  4200 Jul  3 17:23 Environment_Report.txt
+
+Explanation of Command:
+The 'ls -la' command lists all files, directories, and hidden dot files in the current folder, along with detailed information such as file size, permissions, owner, and modification time. It shows the newly initialized environment report file along with directories '.' (current) and '..' (parent).
+
+Screenshot Placeholder:
+[SCREENSHOT: List of workspace files using the 'ls -la' command]
+
+Brief Observations:
+- Only the report document 'Environment_Report.txt' is currently present in the Question1 folder.
+- Standard read and write permissions (rw-r--r--) are set on the report file for user 'aanshu1'.
+- The directory ownership is correctly allocated to the 'aanshu1' user and 'staff' group.
+
+----------------------------------------------------------------------
+6. NETWORK CONNECTIVITY VERIFICATION RESULT
+----------------------------------------------------------------------
+Command Executed:
+$ ping -c 3 google.com
+
+Expected Output:
+PING google.com (192.178.158.100): 56 data bytes
+64 bytes from 192.178.158.100: icmp_seq=0 ttl=101 time=76.701 ms
+64 bytes from 192.178.158.100: icmp_seq=1 ttl=101 time=31.305 ms
+64 bytes from 192.178.158.100: icmp_seq=2 ttl=101 time=47.704 ms
+
+--- google.com ping statistics ---
+3 packets transmitted, 3 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 31.305/51.903/76.701/18.769 ms
+
+Explanation of Command:
+The 'ping -c 3 google.com' command sends exactly 3 ICMP Echo Request packets to the google.com domain to verify host reachability and network connection speeds. The output confirms active internet connectivity with a 0% packet loss rate and a round-trip average time of 51.9 ms.
+
+Screenshot Placeholder:
+[SCREENSHOT: Command output of ping verifying successful network transmission and low latency]
+
+Brief Observations:
+- Network link is fully operational and has low response latencies.
+- The DNS system resolved 'google.com' to its active IP address (192.178.158.100).
+- No network packet degradation or transmission failures occurred during the diagnostics.
+
+======================================================================
+                          END OF ENVIRONMENT REPORT
+======================================================================

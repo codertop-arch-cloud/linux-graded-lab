@@ -1,0 +1,128 @@
+======================================================================
+                     FILE ACCESS AND I/O INVESTIGATION REPORT
+                            (Question 4 - Lab Report)
+======================================================================
+Student Workspace: /Users/aanshu1/.gemini/antigravity/scratch/linux-graded-lab/Question4
+Date: 2026-07-03
+
+----------------------------------------------------------------------
+1. IDENTIFYING OPEN FILES
+----------------------------------------------------------------------
+Command Executed:
+$ lsof -p 46236 | head -n 8
+
+Expected Output:
+COMMAND   PID    USER   FD    TYPE             DEVICE SIZE/OFF                NODE NAME
+zsh     46236 aanshu1  cwd     DIR               1,16       64            67117785 /Users/aanshu1/.gemini/antigravity/scratch/linux-graded-lab/Question4
+zsh     46236 aanshu1  txt     REG               1,16  1361200 1152921500312561705 /bin/zsh
+zsh     46236 aanshu1  txt     REG               1,16  2300384 1152921500312563530 /usr/lib/dyld
+zsh     46236 aanshu1    0    PIPE 0x6f3b7ee8b9120a4f    16384                     ->0x301b21431f61c506
+zsh     46236 aanshu1    1    PIPE 0x6d3e5871c5e795d5    16384                     ->0x6d9a8e2486d9ac80
+zsh     46236 aanshu1    2    PIPE 0x6d3e5871c5e795d5    16384                     ->0x6d9a8e2486d9ac80
+zsh     46236 aanshu1   10r    CHR                3,2      0t0                 336 /dev/null
+
+Explanation of Command:
+The 'lsof' (list open files) command identifies all active files opened by processes running on the system. Specifying the '-p' flag restricts the query to the specific Process ID (PID) of the shell (46236), showing directories, binaries, libraries, and communication pipes.
+
+Screenshot Placeholder:
+[SCREENSHOT: Execution of lsof command showing open files for the shell process]
+
+----------------------------------------------------------------------
+2. FILE DESCRIPTOR OBSERVATIONS
+----------------------------------------------------------------------
+Technical Details:
+In the output above, look closely at the 'FD' (File Descriptor) column:
+- 'cwd': Represents the Current Working Directory of the process.
+- 'txt': Represents the program text (e.g., the '/bin/zsh' binary code and its libraries).
+- '0': Represents File Descriptor 0 (Standard Input / stdin), which is linked to a system pipe.
+- '1': Represents File Descriptor 1 (Standard Output / stdout), which is also mapped to a pipe.
+- '2': Represents File Descriptor 2 (Standard Error / stderr), mapped to the same output pipe.
+- '10r': Represents File Descriptor 10, open for reading from '/dev/null'.
+
+*Linux-specific note*: In a native Linux environment, these active descriptors can be investigated dynamically by listing the directory `/proc/<PID>/fd/` (e.g., `ls -l /proc/self/fd/`), where each descriptor is represented as a symbolic link pointing to the opened file or resource.
+
+----------------------------------------------------------------------
+3. OUTPUT AND ERROR REDIRECTION RESULTS
+----------------------------------------------------------------------
+Command Executed:
+$ ls -la . non_existent_file > output.log 2> error.log
+
+Explanation of Command:
+This command performs directory listing on two targets: '.' (which succeeds) and 'non_existent_file' (which fails). The '>' operator redirects Standard Output (FD 1) to 'output.log', while '2>' redirects Standard Error (FD 2) to 'error.log', demonstrating process stream separation.
+
+Screenshot Placeholder:
+[SCREENSHOT: Redirection command execution in Terminal and verification files creation]
+
+-----
+Verification of Redirected Output:
+Command Executed:
+$ cat output.log | head -n 4
+
+Expected Output:
+.:
+total 8
+drwxr-xr-x  4 aanshu1  staff  128 Jul  3 17:27 .
+drwxr-xr-x  8 aanshu1  staff  256 Jul  3 17:24 ..
+
+Explanation of Command:
+The 'cat' command displays file contents, piped into 'head' to restrict the screen view to the first 4 lines. The output confirms that the successful directory listing text was captured inside 'output.log'.
+
+-----
+Verification of Redirected Error:
+Command Executed:
+$ cat error.log
+
+Expected Output:
+ls: non_existent_file: No such file or directory
+
+Explanation of Command:
+The 'cat error.log' command verifies what was written to the error log file. The output confirms that the exact warning error message from the 'ls' command was cleanly separated and saved in 'error.log' without polluting standard stdout.
+
+Screenshot Placeholder:
+[SCREENSHOT: Terminal output showing cat operations for both output.log and error.log]
+
+----------------------------------------------------------------------
+4. RESOURCE LIMITS OBSERVED
+----------------------------------------------------------------------
+Command Executed:
+$ ulimit -a
+
+Expected Output:
+-t: cpu time (seconds)              unlimited
+-f: file size (blocks)              unlimited
+-d: data seg size (kbytes)          unlimited
+-s: stack size (kbytes)             8176
+-c: core file size (blocks)         0
+-v: address space (kbytes)          unlimited
+-l: locked-in-memory size (kbytes)  unlimited
+-u: processes                       1333
+-n: file descriptors                1048575
+
+Explanation of Command:
+The 'ulimit -a' command lists all process resource limits set by the system shell. This contains crucial thresholds like maximum CPU time, max file size, maximum user processes (1333), and the maximum number of open file descriptors (1048575).
+
+Screenshot Placeholder:
+[SCREENSHOT: Output of the ulimit -a command listing all resource boundaries]
+
+----------------------------------------------------------------------
+5. HOW LINUX MANAGES FILE I/O
+----------------------------------------------------------------------
+In Linux, I/O operations are governed by three primary kernel-level tables:
+
+1. Process-Specific File Descriptor Table:
+   Each running process maintains its own array of file descriptors (0, 1, 2, 3...). Each integer index contains a pointer that references an entry in the system-wide Open File Table.
+
+2. System-Wide Open File Table:
+   This kernel table tracks all open files system-wide. Each entry contains vital details about the open instance, including the file status flags (read, write, append, non-blocking), the current file offset (where the next read/write will occur), and a pointer to the Virtual File System (VFS) inode table entry.
+
+3. Inode Table (VFS Inode):
+   The Virtual File System (VFS) inode table references the physical file information on disk. It contains basic metadata (permissions, file size, owner) and pointers to the physical blocks containing the file contents on the disk media.
+
+Redirection Mechanics:
+- When standard output redirection (`>`) occurs, the kernel updates the process's file descriptor table entry for FD 1 (stdout) to point to the open file entry of `output.log` in the system-wide table.
+- When error redirection (`2>`) occurs, the table entry for FD 2 (stderr) is updated to point to `error.log`.
+- Through this mechanism, programs can write to stdout/stderr using standard write calls, while the operating system seamlessly route the bytes to different files, pipes, or screens without program modifications.
+
+======================================================================
+                        END OF I/O INVESTIGATION
+======================================================================
