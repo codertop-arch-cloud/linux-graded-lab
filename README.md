@@ -34,23 +34,23 @@ linux-graded-lab/
 
 ## 📝 Folder Summary & Deliverables
 
-### [Question 1: Linux Environment Verification](file:///Users/aanshu1/.gemini/antigravity/scratch/linux-graded-lab/Question1/Environment_Report.txt)
+### [Question 1: Linux Environment Verification](./Question1/Environment_Report.txt)
 - **Objective**: Verify the current user account, groups, active shell, current working directory, workspace files, and network connectivity.
 - **Main Deliverable**: `Environment_Report.txt`
 
-### [Question 2: Secure Project Workspace Setup](file:///Users/aanshu1/.gemini/antigravity/scratch/linux-graded-lab/Question2/Project_Workspace_Report.txt)
+### [Question 2: Secure Project Workspace Setup](./Question2/Project_Workspace_Report.txt)
 - **Objective**: Set up a secure shared folder structure, configuring appropriate directory and file permissions, ownership settings, and explaining the security implications of `umask`.
 - **Main Deliverable**: `Project_Workspace_Report.txt`
 
-### [Question 3: File System and Link Analysis](file:///Users/aanshu1/.gemini/antigravity/scratch/linux-graded-lab/Question3/Link_Analysis_Report.txt)
+### [Question 3: File System and Link Analysis](./Question3/Link_Analysis_Report.txt)
 - **Objective**: Create and compare hard links and symbolic (soft) links, analyze inode values, study deletion behaviors, and summarize link mechanics.
 - **Main Deliverable**: `Link_Analysis_Report.txt`
 
-### [Question 4: File Access and I/O Investigation](file:///Users/aanshu1/.gemini/antigravity/scratch/linux-graded-lab/Question4/IO_Investigation_Report.txt)
+### [Question 4: File Access and I/O Investigation](./Question4/IO_Investigation_Report.txt)
 - **Objective**: Analyze active file descriptors, identify open files (`lsof`), practice command output/error redirection, check process resource limits (`ulimit`), and outline Linux I/O management.
 - **Main Deliverable**: `IO_Investigation_Report.txt`
 
-### [Question 5: Storage Health Assessment and Documentation](file:///Users/aanshu1/.gemini/antigravity/scratch/linux-graded-lab/Question5/Storage_Assessment_Report.txt)
+### [Question 5: Storage Health Assessment and Documentation](./Question5/Storage_Assessment_Report.txt)
 - **Objective**: Check disk storage (`df`), inode levels (`df -i`), directory disk usage (`du`), and mounted systems. The report was composed in the `vi` editor to practice basic visual editor operations.
 - **Main Deliverable**: `Storage_Assessment_Report.txt`
 

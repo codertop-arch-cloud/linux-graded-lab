@@ -2,7 +2,7 @@
                      LINUX ENVIRONMENT VERIFICATION REPORT
                              (Question 1 - Lab Report)
 ======================================================================
-Student Workspace: /Users/aanshu1/.gemini/antigravity/scratch/linux-graded-lab
+Student Workspace: /Users/aanshu1/linux-graded-lab
 Date: 2026-07-03
 
 ----------------------------------------------------------------------
@@ -72,7 +72,7 @@ Command Executed:
 $ pwd
 
 Expected Output:
-/Users/aanshu1/.gemini/antigravity/scratch/linux-graded-lab/Question1
+/Users/aanshu1/linux-graded-lab/Question1
 
 Explanation of Command:
 The 'pwd' (print working directory) command prints the absolute path of the directory you are currently working in. The command outputs the exact location where our verification files and lab reports are currently being configured.

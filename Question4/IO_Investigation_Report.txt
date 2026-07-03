@@ -2,7 +2,7 @@
                      FILE ACCESS AND I/O INVESTIGATION REPORT
                             (Question 4 - Lab Report)
 ======================================================================
-Student Workspace: /Users/aanshu1/.gemini/antigravity/scratch/linux-graded-lab/Question4
+Student Workspace: /Users/aanshu1/linux-graded-lab/Question4
 Date: 2026-07-03
 
 ----------------------------------------------------------------------
@@ -13,7 +13,7 @@ $ lsof -p 46236 | head -n 8
 
 Expected Output:
 COMMAND   PID    USER   FD    TYPE             DEVICE SIZE/OFF                NODE NAME
-zsh     46236 aanshu1  cwd     DIR               1,16       64            67117785 /Users/aanshu1/.gemini/antigravity/scratch/linux-graded-lab/Question4
+zsh     46236 aanshu1  cwd     DIR               1,16       64            67117785 /Users/aanshu1/linux-graded-lab/Question4
 zsh     46236 aanshu1  txt     REG               1,16  1361200 1152921500312561705 /bin/zsh
 zsh     46236 aanshu1  txt     REG               1,16  2300384 1152921500312563530 /usr/lib/dyld
 zsh     46236 aanshu1    0    PIPE 0x6f3b7ee8b9120a4f    16384                     ->0x301b21431f61c506

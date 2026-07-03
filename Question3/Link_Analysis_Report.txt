@@ -2,7 +2,7 @@
                      FILE SYSTEM AND LINK ANALYSIS REPORT
                              (Question 3 - Lab Report)
 ======================================================================
-Student Workspace: /Users/aanshu1/.gemini/antigravity/scratch/linux-graded-lab/Question3
+Student Workspace: /Users/aanshu1/linux-graded-lab/Question3
 Date: 2026-07-03
 
 ----------------------------------------------------------------------
