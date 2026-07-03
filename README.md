@@ -61,4 +61,4 @@ linux-graded-lab/
 
 ---
 
-*Note: All screenshot placeholders in the reports correspond to files that should be captured locally from the shell terminal before final submission.*
+*Note: All screenshots have been successfully captured, sequentially organized, and linked within their respective question reports for final grading.*
